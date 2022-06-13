@@ -6,3 +6,6 @@ class ControllerAEV:
         self.__aevs = []
         self.__view_aevs = ViewAEV()
         
+    def iniciar_aev(self):
+        self.__view_aevs.view_opcoes()
+        
