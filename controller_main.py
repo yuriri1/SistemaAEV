@@ -17,31 +17,27 @@ class ControllerMain:
         self.__controller_traje = ControllerTraje()
         self.__controller_anomalia = ControllerAnomalia()
         self.__view_main = ViewMain()
+        self.__desliga = True
 
-    def iniciar(self):
-        # switcher = {0: False,
-        #             1: self.__controller_aev.__view_aevs.view_opcoes,
-        #             2: self.__controller_astronauta.__view_astronauta.view_opcoes,
-        #             3: self.__controller_tarefa.__view_tarefa.view_opcoes,
-        #             4: self.__controller_traje.__view_traje.view_opcoes,
-        #             5: self.__controller_caixa.__view_caixa.view_opcoes,
-        #             6: self.__controller_ferramenta.__view_ferramentas.view_opcoes,}
-        while True:
+
+    def desligar(self):
+        self.__desliga = False
+
+    def menu_opcoes(self):
+        switcher = {0: self.desligar,
+                    1: self.__controller_aev.menu_opcoes,
+                    2: self.__controller_astronauta.menu_opcoes,
+                    3: self.__controller_tarefa.menu_opcoes,
+                    4: self.__controller_traje.menu_opcoes,
+                    5: self.__controller_caixa.menu_opcoes,
+                    6: self.__controller_ferramenta.menu_opcoes}
+
+        self.__desliga = True
+
+        while self.__desliga:
             opcao = self.__view_main.menu_inicial()
-            if opcao == 1:
-                self.__controller_aev.iniciar_aev()
-            elif opcao == 2:
-                self.__controller_astronauta.view_opcoes()
-            elif opcao == 3:
-                pass
-            elif opcao == 4:
-                pass
-            elif opcao == 5:
-                pass
-            elif opcao == 6:
-                pass
-            elif opcao == 0:
-                break
+            funcao_selecionada = switcher[opcao]
+            funcao_selecionada()
 
 if __name__ == '__main__':
-    ControllerMain().iniciar()
+    ControllerMain().menu_opcoes()

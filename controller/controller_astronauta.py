@@ -22,7 +22,7 @@ class ControllerAstronauta:
     def retornar(self):
         self.__manter_tela = False
     
-    def view_opcoes(self):
+    def menu_opcoes(self):
         switcher = {0: self.retornar, 1: self.incluir, 
                     2: self.alterar, 3: self.excluir, 
                     4: self.listar}
