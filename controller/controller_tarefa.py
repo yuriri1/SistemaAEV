@@ -1,15 +1,9 @@
-from urllib3 import Retry
-from model.caixa_ferramenta import CaixaFerramenta
-from model.ferramenta import Ferramenta
 from model.tarefa import Tarefa
 from view.view_tarefa import ViewTarefa
 
 class ControllerTarefa:
-    def __init__(self):
-        self.__tarefas = [Tarefa(1,
-                                 "Lavar a asa dianteira",
-                                 "Colaboradores precisam ir até a asa dianteira e tirar toda poeira espacial",
-                                 CaixaFerramenta(2,Ferramenta("Assoprador", 4)))]
+    def __init__(self,controller_main):
+        self.__tarefas = []
         self.__view_tarefa = ViewTarefa()
         
     @property

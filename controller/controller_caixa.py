@@ -2,7 +2,7 @@ from model.caixa_ferramenta import CaixaFerramenta
 from view.view_caixa import ViewCaixa
 
 class ControllerCaixa:
-    def __init__(self):
+    def __init__(self,controller_main):
         self.__caixas = []
         self.__view_caixa = ViewCaixa()
 

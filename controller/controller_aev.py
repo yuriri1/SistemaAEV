@@ -2,13 +2,11 @@ from model.aev import AEV
 from model.astronauta import Astronauta
 from model.traje import Traje
 from view.view_aev import ViewAEV
-from controller.controller_tarefa import ControllerTarefa
 
 class ControllerAEV:
-    def __init__(self):
+    def __init__(self, controller_main):
         self.__aevs = []
         self.__view_aev = ViewAEV()
-        self.__controller_tarefa = ControllerTarefa()
         self.__manter_tela = True
         
     @property

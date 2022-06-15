@@ -2,7 +2,7 @@ from model.astronauta import Astronauta
 from view.view_astronauta import ViewAstronauta
 
 class ControllerAstronauta:
-    def __init__(self):
+    def __init__(self,controller_main):
         self.__astronautas = []
         self.__view_astronauta = ViewAstronauta()
         self.__manter_tela = True

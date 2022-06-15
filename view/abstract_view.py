@@ -13,7 +13,8 @@ class AbstractView:
                 print("Valor incorreto: \
 Digite um valor numerico inteiro valido")
                 if inteiros_validos:
-                    print("Valores validos: ", inteiros_validos)
+                    print("Valores validos: ",
+                          ', '.join([str(i) for i in inteiros_validos]))
     
     def le_num_flutuante(self,mensagem):
         while True:
@@ -26,3 +27,6 @@ Digite um valor numerico inteiro valido")
             except ValueError:
                 print("Valor incorreto: \
 Digite um valor numerico flutuante valido")
+                
+    def view_mensagem(self, msg: str):
+        print(msg)
