@@ -27,11 +27,17 @@ class ViewTraje(AbstractView):
         return codigo, tipo, capacidade_o2
 
     def view_listar(self, trajes):
-        print("-"*50)
-        print(f"{'CODIGO': <10}{'TIPO': ^15}{'CAPACIDADE DE OXIGENIO(L)': >20}")
-        for i in trajes:
-            print(f"{i.codigo: <10}{i.tipo.name: ^15}{i.capacidade_o2: >15}")
-        print("-"*50)
+        print("-"*60)
+        print(f"{'CODIGO': <10}{'TIPO': ^15}\
+              {'CAPACIDADE DE OXIGENIO(L)': ^20}{'DONO': >10}")
+        for traje in trajes:
+            if traje.dono is None:
+                print(f"{traje.codigo: <10}{traje.tipo.name: ^15}\
+                      {traje.capacidade_o2: >15}")
+            else:
+                print(f"{traje.codigo: <10}{traje.tipo.name: ^15}\
+                      {traje.capacidade_o2: ^25}{traje.dono.nome: >10}")
+        print("-"*60)
 
     def view_codigos(self, codigos: list, acao: str):
         return self.le_num_inteiro(f"Escreva o codigo do \

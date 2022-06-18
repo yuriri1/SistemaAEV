@@ -32,9 +32,9 @@ class ControllerTraje:
                 codigos.append(t.codigo)
             if codigo not in codigos:
                 self.trajes.append(traje)
-                self.view_ferramenta.view_mensagem("Inserido com sucesso!")
+                self.view_traje.view_mensagem("Inserido com sucesso!")
             else:
-                raise ObjetoDuplicadoException("um com o codigo", "um traje")
+                raise ObjetoDuplicadoException("um traje")
 
     def excluir(self):
         if self.listar():
@@ -59,6 +59,12 @@ class ControllerTraje:
 
     def retornar(self):
         self.__manter_tela = False
+        
+    def pega_traje_pelo_codigo(self, codigo):
+        for traje in self.trajes:
+            if traje.codigo == codigo:
+                return traje
+        return None
 
     def menu_opcoes(self):
         switcher = {0: self.retornar, 1: self.incluir,

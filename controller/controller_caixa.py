@@ -1,5 +1,3 @@
-import re
-from tkinter import N
 from model.caixa_ferramenta import CaixaFerramenta
 from view.view_caixa import ViewCaixa
 from exception.objeto_duplicado_exception import ObjetoDuplicadoException
@@ -33,20 +31,21 @@ class ControllerCaixa:
             else:
                 codigos = []
                 codigo, nome, ferramentas = self.view_caixa.view_incluir(
-                                        lista_ferramentas, ctrl_ferramenta)
+                    lista_ferramentas, 
+                    ctrl_ferramenta
+                )
                 caixa = CaixaFerramenta(codigo, nome, ferramentas)
                 if len(self.caixas) == 0:
                     self.caixas.append(caixa)
                     self.view_caixa.view_mensagem("Inserido com sucesso!")
                 else:
-                    for f in self.caixas:
-                        codigos.append(f.codigo)
+                    for c in self.caixas:
+                        codigos.append(c.codigo)
                     if codigo not in codigos:
                         self.caixas.append(caixa)
                         self.view_caixa.view_mensagem("Inserido com sucesso!")
                     else:
-                        raise ObjetoDuplicadoException("um com o codigo",
-                                                    "uma ferramentas")
+                        raise ObjetoDuplicadoException("uma ferramenta")
         
 
     def excluir(self):
@@ -56,7 +55,7 @@ class ControllerCaixa:
                 codigos.append(caixa.codigo)
             escolha_remocao = self.view_caixa.\
                             view_codigos(codigos, "excluir")
-            self.caixas.remove(self.pegar_caixa_pelo_codigo(escolha_remocao))
+            self.caixas.remove(self.pega_caixa_pelo_codigo(escolha_remocao))
             self.view_caixa.view_mensagem("Excluido com sucesso!")
             
     def alterar(self):
@@ -85,7 +84,7 @@ class ControllerCaixa:
     def retornar(self):
         self.__manter_tela = False
         
-    def pegar_caixa_pelo_codigo(self, codigo):
+    def pega_caixa_pelo_codigo(self, codigo):
         for caixa in self.caixas:
             if caixa.codigo == codigo:
                 return caixa
@@ -105,6 +104,6 @@ class ControllerCaixa:
                 funcao_escolhida()
             except ObjetoDuplicadoException as e:
                 print(e)
-            except ListaVaziaException as ex:
-                print(ex)
+            except ListaVaziaException as e:
+                print(e)
             

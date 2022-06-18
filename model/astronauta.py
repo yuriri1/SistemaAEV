@@ -1,10 +1,19 @@
 from model.traje import Traje
 
 class Astronauta:
-    def __init__(self,nome: str,nacionalidade: str, traje: Traje):
+    def __init__(self,codigo: int, nome: str,nacionalidade: str, traje: Traje):
+        self.__codigo = codigo
         self.__nome = nome
         self.__nacionalidade = nacionalidade
         self.__traje = traje
+
+    @property
+    def codigo(self):
+        return self.__codigo
+    
+    @codigo.setter
+    def codigo(self, codigo: int):
+        self.__codigo = codigo
 
     @property
     def nome(self):

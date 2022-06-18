@@ -1,5 +1,5 @@
 from enum import Enum
 
 class TipoTraje(Enum):
-    mundano = 1
-    espacial = 2
+    Intraveicular = 1
+    Extraveicular = 2

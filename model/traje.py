@@ -5,6 +5,7 @@ class Traje:
         self.__codigo = codigo
         self.__tipo = tipo
         self.__capacidade_o2 = capacidade_o2
+        self.__dono = None
         
     @property
     def codigo(self):
@@ -29,3 +30,11 @@ class Traje:
     @capacidade_o2.setter
     def capacidade_o2(self, capacidade_o2: float):
         self.__capacidade_o2 = capacidade_o2
+        
+    @property
+    def dono(self):
+        return self.__dono
+    
+    @dono.setter
+    def dono(self, dono):
+        self.__dono = dono

@@ -29,6 +29,7 @@ class ControllerFerramenta:
         ferramenta = Ferramenta(nome, codigo)
         if len(self.ferramentas) == 0:
             self.ferramentas.append(ferramenta)
+            
             self.view_ferramenta.view_mensagem("Inserido com sucesso!")
         else:
             for f in self.ferramentas:
@@ -37,7 +38,7 @@ class ControllerFerramenta:
                 self.ferramentas.append(ferramenta)
                 self.view_ferramenta.view_mensagem("Inserido com sucesso!")
             else:
-                raise ObjetoDuplicadoException("um com o codigo","uma ferramentas")
+                raise ObjetoDuplicadoException("uma ferramentas")
     
     def excluir(self):
         if self.listar():

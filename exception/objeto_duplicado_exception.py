@@ -1,4 +1,4 @@
 class ObjetoDuplicadoException(Exception):
-    def __init__(self, attr_duplicado: str, objeto: str):
+    def __init__(self, objeto: str):
         super().__init__(f"Não foi possível criar {objeto},\
-pois ja existe {attr_duplicado} igual no sistema")
+pois ja existe um com o codigo igual no sistema")
