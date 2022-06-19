@@ -18,11 +18,16 @@ class ControllerTraje:
     @property
     def view_traje(self):
         return self.__view_traje
+    
+    @property
+    def tipo_traje(self):
+        return self.__tipo_traje
 
     def incluir(self):
         codigos = []
-        codigo, tipo, capacidade_o2 = self.view_traje \
-            .view_incluir(self.__tipo_traje)
+        codigo, tipo, capacidade_o2 = (self.
+                                       view_traje.
+                                       view_incluir(self.tipo_traje))
         traje = Traje(codigo, tipo, capacidade_o2)
         if len(self.trajes) == 0:
             self.trajes.append(traje)
@@ -41,7 +46,9 @@ class ControllerTraje:
             codigos = []
             for traje in self.trajes:
                 codigos.append(traje.codigo)
-            escolha_remocao = self.view_traje.view_codigos(codigos, "excluir")
+            escolha_remocao = (self.
+                               view_traje.
+                               view_codigos(codigos, "traje", "excluir"))
             for i, traje in enumerate(self.trajes):
                 if escolha_remocao == traje.codigo:
                     self.trajes.pop(i)
@@ -60,7 +67,7 @@ class ControllerTraje:
     def retornar(self):
         self.__manter_tela = False
         
-    def pega_traje_pelo_codigo(self, codigo):
+    def pega_traje_pelo_codigo(self, codigo: list):
         for traje in self.trajes:
             if traje.codigo == codigo:
                 return traje

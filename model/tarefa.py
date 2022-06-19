@@ -2,12 +2,13 @@ from model.caixa_ferramenta import CaixaFerramenta
 
 class Tarefa:
     def __init__(self, codigo: int, titulo: str,
-                 descricao: str,
-                 caixas: CaixaFerramenta):
+                 descricao: str, caixa: CaixaFerramenta,
+                 duracao: int):
         self.__titulo = titulo
         self.__descricao = descricao
         self.__codigo = codigo
-        self.__caixas = caixas
+        self.__caixa = caixa
+        self.__duracao = duracao
 
     @property
     def codigo(self):
@@ -34,9 +35,17 @@ class Tarefa:
         self.__descricao = descricao
 
     @property
-    def caixas(self):
-        return self.__caixas
+    def caixa(self):
+        return self.__caixa
 
-    @caixas.setter
-    def caixas(self, caixas: CaixaFerramenta):
-        self.__caixas = caixas
+    @caixa.setter
+    def caixa(self, caixa: CaixaFerramenta):
+        self.__caixa = caixa
+        
+    @property
+    def duracao(self):
+        return self.__duracao
+    
+    @duracao.setter
+    def duracao(self, duracao: int):
+        self.__duracao = duracao

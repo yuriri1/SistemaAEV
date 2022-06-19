@@ -45,10 +45,11 @@ class ControllerFerramenta:
             codigos = []
             for ferramenta in self.ferramentas:
                 codigos.append(ferramenta.codigo)
-            escolha_remocao = self.view_ferramenta.\
-                                view_codigos(codigos, "excluir")
+            escolha_remocao = (self.
+                               view_ferramenta.
+                               view_codigos(codigos, "ferramenta", "excluir"))
             self.ferramentas.remove(
-                            self.pega_ferramenta_pelo_codigo(escolha_remocao))
+                self.pega_ferramenta_pelo_codigo(escolha_remocao))
             self.view_ferramenta.view_mensagem("Excluido com sucesso!")
     
     def alterar(self):
@@ -56,8 +57,9 @@ class ControllerFerramenta:
             codigos = []
             for ferramenta in self.ferramentas:
                 codigos.append(ferramenta.codigo)
-            escolha_edicao = self.view_ferramenta.view_codigos(codigos,
-                                                               "editar")
+            escolha_edicao = (self.
+                              view_ferramenta.
+                              view_codigos(codigos,"ferramenta", "editar"))
             for ferramenta in self.ferramentas:
                 if escolha_edicao == ferramenta.codigo:
                     ferramenta.nome = self.view_ferramenta.view_editar()
@@ -76,7 +78,7 @@ class ControllerFerramenta:
     def retornar(self):
         self.__manter_tela = False
         
-    def pega_ferramenta_pelo_codigo(self, codigo):
+    def pega_ferramenta_pelo_codigo(self, codigo: list):
         for ferramenta in self.ferramentas:
             if ferramenta.codigo == codigo:
                 return ferramenta

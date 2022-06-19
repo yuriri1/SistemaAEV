@@ -22,18 +22,19 @@ class ControllerCaixa:
         return self.__controller_main
 
     def incluir(self):
-            lista_ferramentas = self.controller_main.\
-                                    controller_ferramenta.\
-                                    ferramentas.copy()
+            lista_ferramentas = (self.
+                                 controller_main.
+                                 controller_ferramenta.
+                                 ferramentas.copy())
             ctrl_ferramenta = self.controller_main.controller_ferramenta
             if len(lista_ferramentas) == 0:
                 raise ListaVaziaException("Ferramenta")
             else:
                 codigos = []
-                codigo, nome, ferramentas = self.view_caixa.view_incluir(
-                    lista_ferramentas, 
-                    ctrl_ferramenta
-                )
+                codigo, nome, ferramentas = (self.
+                                             view_caixa.
+                                             view_incluir(lista_ferramentas, 
+                                                          ctrl_ferramenta))
                 caixa = CaixaFerramenta(codigo, nome, ferramentas)
                 if len(self.caixas) == 0:
                     self.caixas.append(caixa)
@@ -53,20 +54,10 @@ class ControllerCaixa:
             codigos = []
             for caixa in self.caixas:
                 codigos.append(caixa.codigo)
-            escolha_remocao = self.view_caixa.\
-                            view_codigos(codigos, "excluir")
+            escolha_remocao = (self.view_caixa.
+                               view_codigos(codigos,"caixa","excluir"))
             self.caixas.remove(self.pega_caixa_pelo_codigo(escolha_remocao))
             self.view_caixa.view_mensagem("Excluido com sucesso!")
-            
-    def alterar(self):
-        if self.listar():
-            codigos = []
-            for caixa in self.caixas:
-                codigos.append(caixa.codigo)
-            escolha_edicao = self.view_caixa.view_codigos(codigos,"editar")
-            for caixa in self.caixas:
-                if escolha_edicao == caixa.codigo:
-                    caixa.nome = self.view_caixa.view_editar()
 
     def listar(self):
         try:
@@ -74,17 +65,14 @@ class ControllerCaixa:
                 raise ListaVaziaException("Caixa de ferramentas")
         except ListaVaziaException as e:
             print(e)
-        else:
-            nome_ferramentas = []
-            for ferramenta in self.controller_main.\
-                                controller_ferramenta.ferramentas:
-                nome_ferramentas.append(ferramenta.nome)                
-            self.view_caixa.view_listar(self.caixas, nome_ferramentas)
+        else:          
+            self.view_caixa.view_listar(self.caixas)
+            return True
 
     def retornar(self):
         self.__manter_tela = False
         
-    def pega_caixa_pelo_codigo(self, codigo):
+    def pega_caixa_pelo_codigo(self, codigo: list):
         for caixa in self.caixas:
             if caixa.codigo == codigo:
                 return caixa
@@ -92,8 +80,7 @@ class ControllerCaixa:
     
     def menu_opcoes(self):
         switcher = {0: self.retornar, 1: self.incluir, 
-                    2: self.alterar, 3: self.excluir, 
-                    4: self.listar}
+                    2:self.excluir, 3: self.listar}
         
         self.__manter_tela = True
         

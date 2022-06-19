@@ -1,7 +1,7 @@
  
 class AbstractView:
  
-    def le_num_inteiro(self,mensagem,inteiros_validos: list = None):
+    def le_num_inteiro(self,mensagem: str, inteiros_validos: list = None):
         while True:
             valor_lido = input(mensagem)
             try:
@@ -10,13 +10,13 @@ class AbstractView:
                     raise ValueError
                 return inteiro
             except ValueError:
-                print("Valor incorreto: \
-Digite um valor numerico inteiro valido")
+                print("Valor incorreto.")
+                print("Digite um valor numerico inteiro valido")
                 if inteiros_validos:
                     print("Valores validos: ",
                           ', '.join([str(i) for i in inteiros_validos]))
 
-    def le_num_inteiro_limitado(self,mensagem,limite):
+    def le_num_inteiro_limitado(self, mensagem: str, limite: int):
         while True:
             valor_lido = input(mensagem)
             try:
@@ -29,7 +29,7 @@ Digite um valor numerico inteiro valido")
                 if limite:
                     print(f"Valores validos: 1 até {limite}")
     
-    def le_num_flutuante(self,mensagem):
+    def le_num_flutuante(self, mensagem: str):
         while True:
             valor_lido = input(mensagem)
             try:
@@ -38,8 +38,13 @@ Digite um valor numerico inteiro valido")
                     raise ValueError
                 return flutuante
             except ValueError:
-                print("Valor incorreto: \
-Digite um valor numerico flutuante valido")
+                print("Valor incorreto.")
+                print("Digite um valor numerico flutuante valido")
                 
     def view_mensagem(self, msg: str):
         print(msg)
+        
+    def view_codigos(self, codigos: list, objeto: str, acao: str):
+        return self.le_num_inteiro(
+                f"Escreva o codigo do {objeto} que deseja {acao}:",
+                codigos)

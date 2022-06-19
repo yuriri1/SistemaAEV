@@ -1,4 +1,3 @@
-from model import astronauta
 from view.abstract_view import AbstractView
 
 class ViewAstronauta(AbstractView):
@@ -12,10 +11,10 @@ class ViewAstronauta(AbstractView):
         print("3 - Editar Astronauta")
         print("4 - Listar Astronauta")
         print("0 - Voltar")
-        opcao = self.le_num_inteiro("Escolha uma opção: ",[1, 2, 3, 4, 0])
+        opcao = self.le_num_inteiro("Escolha uma opção: ",[0, 1, 2, 3, 4])
         return opcao
     
-    def __view_trajes_disponiveis(self, trajes):
+    def __view_trajes_disponiveis(self, trajes: list):
         print("-"*50)
         print(f"{'TRAJES DISPONIVEIS': ^40}")
         print(f"{'CODIGO': <10}{'TIPO': ^20}{'CAPACIDADE 02': >15}")
@@ -26,24 +25,25 @@ class ViewAstronauta(AbstractView):
                       {traje.capacidade_o2}")
         print("-"*50)
         
-    def view_incluir(self, trajes, c_traje):
+    def view_incluir(self, trajes: list, c_traje: object):
         print("MENU INICIAL ---> MENU DO ASTRONAUTA\
 --> INCLUIR ASTRONAUTA")
         codigo = self.le_num_inteiro("Codigo do astronauta: ")
-        nome = str(input("Nome do astronauta: "))
+        nome = str(input("Nome do astronauta: ")).capitalize()
         nacionalidade = str(input("Nacionalidade do astronauta: "))
         self.__view_trajes_disponiveis(trajes)
         codigos = []
         for j in trajes:
             codigos.append(j.codigo)
-        codigo_selecionado = self\
-        .le_num_inteiro(f"Digite o codigo do traje: ", codigos)
-        traje_escolhido = c_traje.\
-                            pega_traje_pelo_codigo(codigo_selecionado)
+        codigo_selecionado = (self.
+                              le_num_inteiro("Digite o codigo do traje: ",
+                                             codigos))
+        traje_escolhido = (c_traje.
+                           pega_traje_pelo_codigo(codigo_selecionado))
             
         return codigo, nome, nacionalidade, traje_escolhido
         
-    def view_listar(self, astronautas):
+    def view_listar(self, astronautas: list):
         print("-"*70)
         print(f"{'CODIGO': <10}{'NOME': ^10}\
               {'NACIONALIDADE': ^15}{'TRAJE': >15}")
@@ -51,7 +51,3 @@ class ViewAstronauta(AbstractView):
             print(f"{astronauta.codigo: <10}{astronauta.nome: ^10}\
                   {astronauta.nacionalidade: ^15}{astronauta.traje.tipo.name: >15}")
         print("-"*70)
-        
-    def view_codigos(self, codigos: list, acao: str):
-        return self.le_num_inteiro("Escreva o nome do astronauta que deseja {acao}: ", codigos )
-    

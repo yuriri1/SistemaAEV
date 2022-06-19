@@ -1,3 +1,4 @@
+from logging import exception
 from controller.controller_aev import ControllerAEV
 from controller.controller_anomalia import ControllerAnomalia
 from controller.controller_astronauta import ControllerAstronauta
@@ -79,6 +80,10 @@ class ControllerMain:
                     6: self.opcoes_ferramenta}
 
         while True:
-            opcao = self.__view_main.menu_inicial()
-            funcao_selecionada = switcher[opcao]
-            funcao_selecionada()
+            try:
+                opcao = self.__view_main.menu_inicial()
+                funcao_selecionada = switcher[opcao]
+                funcao_selecionada()
+            except ListaVaziaException as e:
+                print(e)
+            

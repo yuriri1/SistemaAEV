@@ -17,19 +17,15 @@ class ViewFerramenta(AbstractView):
     def view_incluir(self):
         print("MENU INICIAL ---> MENU DA FERRAMENTA --> INCLUIR FERRAMENTA")
         codigo = self.le_num_inteiro("Codigo da ferramenta: ")
-        nome = str(input("Nome da ferramenta: "))
+        nome = str(input("Nome da ferramenta: ")).capitalize()
         return codigo, nome
     
-    def view_listar(self, ferramentas):
+    def view_listar(self, ferramentas: list):
         print("-"*30)
-        print(f"{'CODIGO': <10}{'NOME': >20}")
+        print(f"{'CODIGO': <10}{'NOME': ^15}")
         for ferramenta in ferramentas:
-            print(f"{ferramenta.codigo: <20}{ferramenta.nome: >10}")
+            print(f"{ferramenta.codigo: <10}{ferramenta.nome: ^15}")
         print("-"*30)
-        
-    def view_codigos(self, codigos: list, acao: str):
-        return self.le_num_inteiro(f"Escreva o codigo da \
-ferramenta que deseja {acao}:", codigos)
         
     def view_editar(self):
         nome = str(input("Escrevao o novo nome:"))

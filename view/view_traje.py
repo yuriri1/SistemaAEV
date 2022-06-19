@@ -14,7 +14,7 @@ class ViewTraje(AbstractView):
         opcao = self.le_num_inteiro("Escolha uma opção: ", [0, 1, 2, 3])
         return opcao
 
-    def view_incluir(self, tipos):
+    def view_incluir(self, tipos: enumerate):
         print("MENU INICIAL ---> MENU DO TRAJE --> INCLUIR TRAJE")
         codigo = self.le_num_inteiro("Codigo do traje: ")
         for i in list(tipos):
@@ -26,7 +26,7 @@ class ViewTraje(AbstractView):
         capacidade_o2 = self.le_num_flutuante("Capacidade de oxigenio: ")
         return codigo, tipo, capacidade_o2
 
-    def view_listar(self, trajes):
+    def view_listar(self, trajes: list):
         print("-"*60)
         print(f"{'CODIGO': <10}{'TIPO': ^15}\
               {'CAPACIDADE DE OXIGENIO(L)': ^20}{'DONO': >10}")
@@ -38,7 +38,3 @@ class ViewTraje(AbstractView):
                 print(f"{traje.codigo: <10}{traje.tipo.name: ^15}\
                       {traje.capacidade_o2: ^25}{traje.dono.nome: >10}")
         print("-"*60)
-
-    def view_codigos(self, codigos: list, acao: str):
-        return self.le_num_inteiro(f"Escreva o codigo do \
-traje que deseja {acao}:", codigos)

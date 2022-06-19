@@ -29,10 +29,10 @@ class ControllerAstronauta:
             raise ListaVaziaException("Traje")
         else:
             codigos=[]
-            codigo, nome, nacionalidade, traje = self.view_astronauta.view_incluir(
-                lista_trajes,
-                ctrl_traje
-            )
+            codigo, nome, nacionalidade, traje = (self.
+                                                  view_astronauta.
+                                                  view_incluir(lista_trajes,
+                                                               ctrl_traje))
             astronauta = Astronauta(codigo, nome, nacionalidade, traje)
             if len(self.astronautas) == 0:
                 self.astronautas.append(astronauta)
@@ -44,15 +44,33 @@ class ControllerAstronauta:
                 if codigo not in codigos:
                     self.astronautas.append(astronauta)
                     traje.dono = astronauta
-                    self.view_astronauta.view_mensagem("Inserido com sucesso!")
+                    self.view_astronauta.view_mensagem("Inserido com sucesso")
                 else:
                     raise ObjetoDuplicadoException("um astronauta")
             
     def excluir(self):
-            print("EXCLUIR")
+        if self.listar():
+            codigos = []
+            for astronauta in self.astronautas:
+                codigos.append(astronauta.codigo)
+            escolha_remocao = (self.view_astronauta.
+                               view_codigos(codigos, "astronauta", "excluir"))
+            astro = self.pega_astronauta_pelo_codigo(escolha_remocao)
+            astro.traje.dono = None
+            self.astronautas.remove(astro)
+            self.view_astronauta.view_mensagem("Excluido com sucesso!")
 
     def alterar(self):
-        print("ALTERAR")
+        if self.listar():
+            codigos = []
+            for astronautas in self.astronautas:
+                codigos.append(astronautas.codigo)
+            escolha_edicao = self.view_astronauta.view_codigos(codigos,
+                                                               "astronauta",
+                                                               "editar")
+            for astronautas in self.astronautas:
+                if escolha_edicao == astronautas.codigo:
+                    astronautas.nome = self.view_astronauta.view_editar()
 
     
     def listar(self):
@@ -63,13 +81,21 @@ class ControllerAstronauta:
             print(e)
         else:
             self.view_astronauta.view_listar(self.astronautas)
+            return True
+
+    def pega_astronauta_pelo_codigo(self, codigo: list):
+        for astronauta in self.astronautas:
+            if astronauta.codigo == codigo:
+                return astronauta
+        return None
+
 
     def retornar(self):
         self.__manter_tela = False
     
     def menu_opcoes(self):
         switcher = {0: self.retornar, 1: self.incluir, 
-                    2: self.alterar, 3: self.excluir, 
+                    2: self.excluir, 3: self.alterar, 
                     4: self.listar}
         
         self.__manter_tela = True
