@@ -70,7 +70,7 @@ class ControllerAstronauta:
                                                                "editar")
             for astronautas in self.astronautas:
                 if escolha_edicao == astronautas.codigo:
-                    astronautas.nome = self.view_astronauta.view_editar()
+                    nome, nacionalidade = self.view_astronauta.view_editar()
 
     
     def listar(self):

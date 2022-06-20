@@ -1,4 +1,5 @@
 from cmath import e
+import re
 from typing import List
 from model.tarefa import Tarefa
 from view.view_tarefa import ViewTarefa
@@ -76,6 +77,12 @@ class ControllerTarefa:
 
     def retornar(self):
         self.__manter_tela = False
+        
+    def pega_tarefa_pelo_codigo(self, codigo: int):
+        for tarefa in self.tarefas:
+            if tarefa == codigo:
+                return tarefa
+        return None
     
     def menu_opcoes(self):
         switcher = {0: self.retornar, 1: self.incluir, 

@@ -28,5 +28,5 @@ class ViewFerramenta(AbstractView):
         print("-"*30)
         
     def view_editar(self):
-        nome = str(input("Escrevao o novo nome:"))
+        nome = str(input("Escreva o novo nome:")).capitalize()
         return nome

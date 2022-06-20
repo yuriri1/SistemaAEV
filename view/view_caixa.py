@@ -32,12 +32,6 @@ class ViewCaixa(AbstractView):
                           le_num_inteiro_limitado(
                               "Quantas ferramentas vão na caixa?: ",
                               len(ferramentas)))
-        
-        while qnt_ferramenta > len(ferramentas):
-            qnt_ferramenta = (self.
-                              le_num_inteiro(
-                                  "Quantas ferramentas vão na caixa?: ",
-                                  len(ferramentas)))
         for i in range(qnt_ferramenta):
             self.__view_ferramentas_disponiveis(ferramentas)
             codigos = []

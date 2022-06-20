@@ -29,12 +29,12 @@ class ViewTraje(AbstractView):
     def view_listar(self, trajes: list):
         print("-"*60)
         print(f"{'CODIGO': <10}{'TIPO': ^15}\
-              {'CAPACIDADE DE OXIGENIO(L)': ^20}{'DONO': >10}")
+{'CAPACIDADE DE OXIGENIO(L)': ^20}{'DONO': >10}")
         for traje in trajes:
             if traje.dono is None:
                 print(f"{traje.codigo: <10}{traje.tipo.name: ^15}\
-                      {traje.capacidade_o2: >15}")
+{traje.capacidade_o2: ^25}{'Sem dono': >10}")
             else:
                 print(f"{traje.codigo: <10}{traje.tipo.name: ^15}\
-                      {traje.capacidade_o2: ^25}{traje.dono.nome: >10}")
+{traje.capacidade_o2: ^25}{traje.dono.nome: >10}")
         print("-"*60)

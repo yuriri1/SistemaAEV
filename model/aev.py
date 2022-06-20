@@ -3,7 +3,10 @@ from model.astronauta import Astronauta
 from model.tarefa import Tarefa
 
 class AEV:
-    def __init__(self,codigo: int, astronautas: Astronauta, tarefa: Tarefa):
+    def __init__(self,
+                 codigo: int = None,
+                 astronautas: Astronauta = None,
+                 tarefa: Tarefa = None):
         self.__codigo = codigo
         self.__astronautas = astronautas
         self.__tarefa = tarefa

@@ -67,7 +67,7 @@ class ControllerTraje:
     def retornar(self):
         self.__manter_tela = False
         
-    def pega_traje_pelo_codigo(self, codigo: list):
+    def pega_traje_pelo_codigo(self, codigo: int):
         for traje in self.trajes:
             if traje.codigo == codigo:
                 return traje

@@ -1,3 +1,4 @@
+import re
 from view.abstract_view import AbstractView
 
 class ViewAstronauta(AbstractView):
@@ -20,9 +21,8 @@ class ViewAstronauta(AbstractView):
         print(f"{'CODIGO': <10}{'TIPO': ^20}{'CAPACIDADE 02': >15}")
         for traje in trajes:
             if traje.dono is None:
-                print(f"{traje.codigo}\
-                      {traje.tipo.name}\
-                      {traje.capacidade_o2}")
+                print(f"{traje.codigo: <10}{traje.tipo.name: ^20}\
+{traje.capacidade_o2: >15}")
         print("-"*50)
         
     def view_incluir(self, trajes: list, c_traje: object):
@@ -45,9 +45,15 @@ class ViewAstronauta(AbstractView):
         
     def view_listar(self, astronautas: list):
         print("-"*70)
-        print(f"{'CODIGO': <10}{'NOME': ^10}\
-              {'NACIONALIDADE': ^15}{'TRAJE': >15}")
+        print(f"{'CODIGO': <10}{'NOME': ^15}{'NACIONALIDADE': ^15}\
+{'TRAJE': >15}")
         for astronauta in astronautas:
-            print(f"{astronauta.codigo: <10}{astronauta.nome: ^10}\
-                  {astronauta.nacionalidade: ^15}{astronauta.traje.tipo.name: >15}")
+            print(f"{astronauta.codigo: <10}{astronauta.nome: ^15}\
+{astronauta.nacionalidade: ^15}{astronauta.traje.tipo.name: >15}")
         print("-"*70)
+        
+        
+    def view_editar(self):
+        nome = str(input("Escreva o nome: ")).capitalize()
+        nacionalidade = str(input("Escreva a nacionalidade: ")).capitalize()
+        return nome, nacionalidade

@@ -18,12 +18,12 @@ class ViewTarefa(AbstractView):
     def __view_caixas_disponiveis(self, caixas: list):
         print("-"*50)
         print(f"{'CAIXAS DISPONIVEIS': ^40}")
-        print(f"{'CODIGO': <10}{'NOME': ^15}{'FERRAMENTAS': >10}")
+        print(f"{'CODIGO': <10}{'NOME': ^20}{'FERRAMENTAS': >10}")
         for caixa in caixas:
             nome_ferramentas = []
             for ferramenta in caixa.ferramentas:
                 nome_ferramentas.append(ferramenta.nome)
-            print(f"{caixa.codigo: <10}{caixa.nome: ^15}{', '.join(nome_ferramentas): >10}")
+            print(f"{caixa.codigo: <10}{caixa.nome: ^20}{', '.join(nome_ferramentas): >10}")
         print("-"*50)
     
     def view_incluir(self, caixas: list, c_caixa: object):
@@ -47,11 +47,10 @@ class ViewTarefa(AbstractView):
         return codigo, titulo, descricao, duracao, caixa_escolhida
     
     def view_listar(self, tarefas):
-        
         for tarefa in tarefas:
             print("-"*50)
-            print(f"{'CODIGO': <10}{'TITULO': ^10}{'CAIXA': >15}")
-            print(f"{tarefa.codigo: <10}{tarefa.titulo: ^10}{tarefa.caixa.nome: >15}")
+            print(f"{'CODIGO': <10}{'TITULO': ^15}{'CAIXA': >20}")
+            print(f"{tarefa.codigo: <10}{tarefa.titulo: ^15}{tarefa.caixa.nome: >20}")
             print(f"{'DESCRIÇÃO'}")
             print(f"{tarefa.descricao}")
             print("-"*50)
