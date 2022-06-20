@@ -1,11 +1,13 @@
+from re import A
 from model.traje import Traje
 from model.tipo_traje import TipoTraje
 from view.view_traje import ViewTraje
+from controller.abstract_controller import AbstractController
 from exception.objeto_duplicado_exception import ObjetoDuplicadoException
 from exception.lista_vazia_exception import ListaVaziaException
 
 
-class ControllerTraje:
+class ControllerTraje(AbstractController):
     def __init__(self, controller_main):
         self.__trajes = []
         self.__view_traje = ViewTraje()

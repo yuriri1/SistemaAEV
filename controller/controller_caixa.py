@@ -1,10 +1,12 @@
 from model.caixa_ferramenta import CaixaFerramenta
 from view.view_caixa import ViewCaixa
+from controller.abstract_controller import AbstractController
 from exception.objeto_duplicado_exception import ObjetoDuplicadoException
 from exception.lista_vazia_exception import ListaVaziaException
 
-class ControllerCaixa:
-    def __init__(self,controller_main):
+
+class ControllerCaixa(AbstractController):
+    def __init__(self, controller_main):
         self.__caixas = []
         self.__view_caixa = ViewCaixa()
         self.__controller_main = controller_main
@@ -22,31 +24,31 @@ class ControllerCaixa:
         return self.__controller_main
 
     def incluir(self):
-            lista_ferramentas = (self.
-                                 controller_main.
-                                 controller_ferramenta.
-                                 ferramentas.copy())
-            ctrl_ferramenta = self.controller_main.controller_ferramenta
-            if len(lista_ferramentas) == 0:
-                raise ListaVaziaException("Ferramenta")
+        lista_ferramentas = (self.
+                             controller_main.
+                             controller_ferramenta.
+                             ferramentas.copy())
+        ctrl_ferramenta = self.controller_main.controller_ferramenta
+        if len(lista_ferramentas) == 0:
+            raise ListaVaziaException("Ferramenta")
+        else:
+            codigos = []
+            codigo, nome, ferramentas = (self.
+                                         view_caixa.
+                                         view_incluir(lista_ferramentas,
+                                                      ctrl_ferramenta))
+            caixa = CaixaFerramenta(codigo, nome, ferramentas)
+            if len(self.caixas) == 0:
+                self.caixas.append(caixa)
+                self.view_caixa.view_mensagem("Inserido com sucesso!")
             else:
-                codigos = []
-                codigo, nome, ferramentas = (self.
-                                             view_caixa.
-                                             view_incluir(lista_ferramentas, 
-                                                          ctrl_ferramenta))
-                caixa = CaixaFerramenta(codigo, nome, ferramentas)
-                if len(self.caixas) == 0:
+                for c in self.caixas:
+                    codigos.append(c.codigo)
+                if codigo not in codigos:
                     self.caixas.append(caixa)
                     self.view_caixa.view_mensagem("Inserido com sucesso!")
                 else:
-                    for c in self.caixas:
-                        codigos.append(c.codigo)
-                    if codigo not in codigos:
-                        self.caixas.append(caixa)
-                        self.view_caixa.view_mensagem("Inserido com sucesso!")
-                    else:
-                        raise ObjetoDuplicadoException("uma ferramenta")
+                    raise ObjetoDuplicadoException("uma ferramenta")
         
 
     def excluir(self):

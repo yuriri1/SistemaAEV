@@ -1,12 +1,12 @@
-import re
 from model.ferramenta import Ferramenta
 from view.view_ferramenta import ViewFerramenta
+from controller.abstract_controller import AbstractController
 from exception.objeto_duplicado_exception import ObjetoDuplicadoException
 from exception.lista_vazia_exception import ListaVaziaException
 
 
-class ControllerFerramenta:
-    def __init__(self,controller_main):
+class ControllerFerramenta(AbstractController):
+    def __init__(self, controller_main):
         self.__ferramentas = []
         self.__view_ferramenta = ViewFerramenta()
         self.__controller_main = controller_main
@@ -64,7 +64,6 @@ class ControllerFerramenta:
                 if escolha_edicao == ferramenta.codigo:
                     ferramenta.nome = self.view_ferramenta.view_editar()
                     
-    
     def listar(self):
         try:
             if len(self.ferramentas) == 0:

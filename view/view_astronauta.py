@@ -1,10 +1,10 @@
-import re
 from view.abstract_view import AbstractView
+
 
 class ViewAstronauta(AbstractView):
     def __init__(self):
         pass
-    
+
     def view_opcoes(self):
         print("MENU INICIAL ---> MENU DO ASTRONAUTA")
         print("1 - Inserir Astronauta")
@@ -12,9 +12,9 @@ class ViewAstronauta(AbstractView):
         print("3 - Editar Astronauta")
         print("4 - Listar Astronauta")
         print("0 - Voltar")
-        opcao = self.le_num_inteiro("Escolha uma opção: ",[0, 1, 2, 3, 4])
+        opcao = self.le_num_inteiro("Escolha uma opção: ", [0, 1, 2, 3, 4])
         return opcao
-    
+
     def __view_trajes_disponiveis(self, trajes: list):
         print("-"*50)
         print(f"{'TRAJES DISPONIVEIS': ^40}")
@@ -24,12 +24,12 @@ class ViewAstronauta(AbstractView):
                 print(f"{traje.codigo: <10}{traje.tipo.name: ^20}\
 {traje.capacidade_o2: >15}")
         print("-"*50)
-        
+
     def view_incluir(self, trajes: list, c_traje: object):
         print("MENU INICIAL ---> MENU DO ASTRONAUTA\
 --> INCLUIR ASTRONAUTA")
         codigo = self.le_num_inteiro("Codigo do astronauta: ")
-        nome = str(input("Nome do astronauta: ")).capitalize()
+        nome = str(input("Nome do astronauta: ")).title()
         nacionalidade = str(input("Nacionalidade do astronauta: "))
         self.__view_trajes_disponiveis(trajes)
         codigos = []
@@ -40,9 +40,9 @@ class ViewAstronauta(AbstractView):
                                              codigos))
         traje_escolhido = (c_traje.
                            pega_traje_pelo_codigo(codigo_selecionado))
-            
+
         return codigo, nome, nacionalidade, traje_escolhido
-        
+
     def view_listar(self, astronautas: list):
         print("-"*70)
         print(f"{'CODIGO': <10}{'NOME': ^15}{'NACIONALIDADE': ^15}\
@@ -51,9 +51,8 @@ class ViewAstronauta(AbstractView):
             print(f"{astronauta.codigo: <10}{astronauta.nome: ^15}\
 {astronauta.nacionalidade: ^15}{astronauta.traje.tipo.name: >15}")
         print("-"*70)
-        
-        
+
     def view_editar(self):
-        nome = str(input("Escreva o nome: ")).capitalize()
+        nome = str(input("Escreva o nome: ")).title()
         nacionalidade = str(input("Escreva a nacionalidade: ")).capitalize()
         return nome, nacionalidade
