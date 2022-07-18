@@ -1,32 +1,91 @@
+import PySimpleGUI as sg
 from view.abstract_view import AbstractView
 
+
 class ViewFerramenta(AbstractView):
-    def __init__(self):
-        pass
-    
-    def view_opcoes(self):
-        print("MENU INICIAL ---> MENU DA FERRAMENTA")
-        print("1 - Inserir Ferramenta")
-        print("2 - Remover Ferramenta")
-        print("3 - Editar Ferramenta")
-        print("4 - Listar Ferramenta")
-        print("0 - Voltar")
-        opcao = self.le_num_inteiro("Escolha uma opção: ", [0,1,2,3,4])
-        return opcao
-    
+    def __init__(self, controller_ferramenta):
+        self.__controller_ferramenta = controller_ferramenta
+        self.__cabecalho = ["ID", "Nome"]
+        self.__janela = None
+        self.iniciar_componentes()
+
+    @property
+    def controller_ferramenta(self):
+        return self.__controller_ferramenta
+
+    @property
+    def cabecalho(self):
+        return self.__cabecalho
+
     def view_incluir(self):
-        print("MENU INICIAL ---> MENU DA FERRAMENTA --> INCLUIR FERRAMENTA")
-        codigo = self.le_num_inteiro("Codigo da ferramenta: ")
-        nome = str(input("Nome da ferramenta: ")).capitalize()
-        return codigo, nome
-    
-    def view_listar(self, ferramentas: list):
-        print("-"*30)
-        print(f"{'CODIGO': <10}{'NOME': ^15}")
-        for ferramenta in ferramentas:
-            print(f"{ferramenta.codigo: <10}{ferramenta.nome: ^15}")
-        print("-"*30)
-        
-    def view_editar(self):
-        nome = str(input("Escreva o novo nome:")).capitalize()
-        return nome
+        pass
+
+    def iniciar_componentes(self):
+        sg.ChangeLookAndFeel("Light Brown 8")
+
+        ferramentas = self.dict_para_matriz(
+            self.controller_ferramenta.lista_obj_para_dict())
+
+        layout = [
+            [sg.Text("Menu de Ferramentas",
+                     expand_x=True,
+                     justification='center',
+                     font=("Gulim", 18))],
+            [sg.Button("INSERIR",
+                       key="inserir",
+                       expand_x=True,
+                       expand_y=True,
+                       font=("Gulim", 14, "bold"))],
+            [sg.Button("REMOVER",
+                       key="remover",
+                       expand_x=True,
+                       expand_y=True,
+                       font=("Gulim", 14, "bold"))],
+            [sg.Button("EDITRAR",
+                       key="editar",
+                       expand_x=True,
+                       expand_y=True,
+                       font=("Gulim", 14, "bold"))],
+            [sg.Text("_"*80)],
+            [sg.Text("Lista de Ferramentas",
+                     expand_x=True,
+                     justification='center',
+                     font=("Gulim", 18))],
+            [sg.Table(values=ferramentas,
+                      headings=self.cabecalho,
+                      justification='center',
+                      auto_size_columns=True,
+                      expand_x=True,
+                      size=(0, 20),
+                      font=("Gulim", 14, "bold"))],
+            [sg.Button("↩",
+                       focus=True,
+                       key="voltar",
+                       expand_x=True,
+                       expand_y=True,
+                       font=("Gulim", 23, "bold"))]
+        ]
+
+        self.__janela = sg.Window("SCAEV - Ferramentas",
+                                  layout, size=self.size())
+
+    def abrir(self):
+        self.iniciar_componentes()
+        evento, valores = self.__janela.Read()
+
+        switcher = {"inserir": 1,
+                    "remover": 2,
+                    "editar": 3}
+
+        if evento in (None, "voltar"):
+            self.fechar()
+            return 0
+
+        self.fechar()
+        return switcher[evento]
+
+    def fechar(self):
+        self.__janela.Close()
+
+    def pop_mensagem(self, titulo: str, mensagem: str):
+        sg.Popup(titulo, mensagem)

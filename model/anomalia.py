@@ -9,7 +9,7 @@ class Anomalia:
         return self.__horario
 
     @horario.setter
-    def horario(self,horario: float):
+    def horario(self, horario: float):
         self.__horario = horario
 
     @property
@@ -17,7 +17,7 @@ class Anomalia:
         return self.__tipo
 
     @tipo.setter
-    def tipo(self,tipo: float):
+    def tipo(self, tipo: float):
         self.__tipo = tipo
 
     @property
@@ -25,5 +25,5 @@ class Anomalia:
         return self.__descricao
 
     @descricao.setter
-    def descricao(self,descricao: str):
+    def descricao(self, descricao: str):
         self.__descricao = descricao

@@ -1,5 +1,6 @@
 from model.caixa_ferramenta import CaixaFerramenta
 
+
 class Tarefa:
     def __init__(self, codigo: int, titulo: str,
                  descricao: str, caixa: CaixaFerramenta,
@@ -41,11 +42,11 @@ class Tarefa:
     @caixa.setter
     def caixa(self, caixa: CaixaFerramenta):
         self.__caixa = caixa
-        
+
     @property
     def duracao(self):
         return self.__duracao
-    
+
     @duracao.setter
     def duracao(self, duracao: int):
         self.__duracao = duracao

@@ -10,7 +10,6 @@ class ControllerAstronauta(AbstractController):
         self.__astronautas = []
         self.__view_astronauta = ViewAstronauta()
         self.__controller_main = controller_main
-        self.__manter_tela = True
 
     @property
     def astronautas(self):
@@ -79,7 +78,7 @@ class ControllerAstronauta(AbstractController):
             if len(self.astronautas) == 0:
                 raise ListaVaziaException("Astronauta")
         except ListaVaziaException as e:
-            print(e)
+            self.view_astronauta.pop_mensagem("Erro", e)
         else:
             self.view_astronauta.view_listar(self.astronautas)
             return True
@@ -91,7 +90,7 @@ class ControllerAstronauta(AbstractController):
         return None
 
     def retornar(self):
-        self.__manter_tela = False
+        self.controller_main.iniciar_sistema()
 
     def menu_opcoes(self):
         switcher = {0: self.retornar, 1: self.incluir,
@@ -102,10 +101,10 @@ class ControllerAstronauta(AbstractController):
 
         while self.__manter_tela:
             try:
-                opcao_escolhida = self.__view_astronauta.view_opcoes()
+                opcao_escolhida = self.__view_astronauta.abrir()
                 funcao_escolhida = switcher[opcao_escolhida]
                 funcao_escolhida()
             except ObjetoDuplicadoException as e:
-                print(e)
+                self.view_traje.pop_mensagem("Erro", e)
             except ListaVaziaException as e:
-                print(e)
+                self.view_aev.pop_mensagem("Erro", e)

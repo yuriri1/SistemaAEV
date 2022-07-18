@@ -12,7 +12,6 @@ class ControllerAEV(AbstractController):
         self.__aevs = []
         self.__view_aev = ViewAEV()
         self.__controller_main = controller_main
-        self.__manter_tela = True
         self.__astronautas_selecionados = []
         self.__tarefa_selecionada = None
         self.__vazao_o2 = 0.68
@@ -139,7 +138,7 @@ com sucesso!''')
             if len(self.aevs) == 0:
                 raise ListaVaziaException("AEV")
         except ListaVaziaException as e:
-            print(e)
+            self.view_traje.pop_mensagem("Erro", e)
         else:
             self.view_aev.view_listar(self.aevs)
             return True
@@ -156,14 +155,14 @@ com sucesso!''')
             relatorio = Relatorio(aev)
             relatorio.gerar_relatorio()
 
-    def retornar(self):
-        self.__manter_tela = False
-
     def pega_aev_pelo_codigo(self, codigo):
         for aev in self.aevs:
             if aev.codigo == codigo:
                 return aev
         return None
+
+    def retornar(self):
+        self.controller_main.iniciar_sistema()
 
     def menu_opcoes(self):
         if (len(self.controller_main.controller_astronauta.astronautas) == 0
@@ -181,16 +180,14 @@ com sucesso!''')
                         4: self.listar,
                         5: self.gerar_relatorio}
 
-            self.__manter_tela = True
-
-            while self.__manter_tela:
+            while True:
                 try:
-                    opcao_escolhida = self.view_aev.view_opcoes()
+                    opcao_escolhida = self.view_aev.abrir()
                     funcao_escolhida = switcher[opcao_escolhida]
                     funcao_escolhida()
                 except ObjetoDuplicadoException as e:
-                    print(e)
+                    self.view_aev.pop_mensagem("Erro", e)
                 except ListaVaziaException as e:
-                    print(e)
+                    self.view_aev.pop_mensagem("Erro", e)
                 except RequisitoExcepiton as e:
-                    print(e)
+                    self.view_aev.pop_mensagem("Erro", e)

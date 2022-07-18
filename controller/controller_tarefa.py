@@ -1,4 +1,3 @@
-from re import A
 from model.tarefa import Tarefa
 from view.view_tarefa import ViewTarefa
 from controller.abstract_controller import AbstractController
@@ -11,7 +10,6 @@ class ControllerTarefa(AbstractController):
         self.__tarefas = []
         self.__view_tarefa = ViewTarefa()
         self.__controller_main = controller_main
-        self.__manter_tela = True
 
     @property
     def tarefas(self):
@@ -69,13 +67,10 @@ class ControllerTarefa(AbstractController):
             if len(self.tarefas) == 0:
                 raise ListaVaziaException("Tarefa")
         except ListaVaziaException as e:
-            print(e)
+            self.view_tarefa.pop_mensagem("Erro de lista vazia", e)
         else:
             self.view_tarefa.view_listar(self.tarefas)
             return True
-
-    def retornar(self):
-        self.__manter_tela = False
 
     def pega_tarefa_pelo_codigo(self, codigo: int):
         for tarefa in self.tarefas:
@@ -83,18 +78,21 @@ class ControllerTarefa(AbstractController):
                 return tarefa
         return None
 
+    def retornar(self):
+        self.controller_main.iniciar_sistema()
+
     def menu_opcoes(self):
-        switcher = {0: self.retornar, 1: self.incluir,
-                    2: self.excluir, 3: self.listar}
+        switcher = {0: self.retornar,
+                    1: self.incluir,
+                    2: self.excluir,
+                    3: self.listar}
 
-        self.__manter_tela = True
-
-        while self.__manter_tela:
+        while True:
             try:
-                opcao_escolhida = self.__view_tarefa.view_opcoes()
+                opcao_escolhida = self.__view_tarefa.abrir()
                 funcao_escolhida = switcher[opcao_escolhida]
                 funcao_escolhida()
             except ObjetoDuplicadoException as e:
-                print(e)
+                self.view_traje.pop_mensagem("Erro", e)
             except ListaVaziaException as e:
-                print(e)
+                self.view_traje.pop_mensagem("Erro", e)

@@ -1,4 +1,3 @@
-from re import A
 from model.traje import Traje
 from model.tipo_traje import TipoTraje
 from view.view_traje import ViewTraje
@@ -10,8 +9,9 @@ from exception.lista_vazia_exception import ListaVaziaException
 class ControllerTraje(AbstractController):
     def __init__(self, controller_main):
         self.__trajes = []
-        self.__view_traje = ViewTraje()
+        self.__view_traje = ViewTraje(self)
         self.__tipo_traje = TipoTraje
+        self.__controller_main = controller_main
 
     @property
     def trajes(self):
@@ -20,10 +20,14 @@ class ControllerTraje(AbstractController):
     @property
     def view_traje(self):
         return self.__view_traje
-    
+
     @property
     def tipo_traje(self):
         return self.__tipo_traje
+
+    @property
+    def controller_main(self):
+        return self.__controller_main
 
     def incluir(self):
         codigos = []
@@ -61,30 +65,41 @@ class ControllerTraje(AbstractController):
             if len(self.trajes) == 0:
                 raise ListaVaziaException("Traje")
         except ListaVaziaException as e:
-            print(e)
+            self.view_traje.pop_mensagem("Erro", e)
         else:
             self.view_traje.view_listar(self.trajes)
             return True
 
-    def retornar(self):
-        self.__manter_tela = False
-        
+    def lista_obj_para_dict(self):
+        lista = [Traje(1, TipoTraje.Extraveicular, 100),
+                 Traje(2, TipoTraje.Intraveicular, 200)]
+        dict = {}
+        for traje in lista:
+            dict[traje.codigo] = [traje.tipo,
+                                  traje.capacidade_o2,
+                                  traje.dono]
+
+        return dict
+
     def pega_traje_pelo_codigo(self, codigo: int):
         for traje in self.trajes:
             if traje.codigo == codigo:
                 return traje
         return None
 
+    def retornar(self):
+        self.controller_main.iniciar_sistema()
+
     def menu_opcoes(self):
-        switcher = {0: self.retornar, 1: self.incluir,
-                    2: self.excluir, 3: self.listar}
+        switcher = {0: self.retornar,
+                    1: self.incluir,
+                    2: self.excluir,
+                    3: self.listar}
 
-        self.__manter_tela = True
-
-        while self.__manter_tela:
+        while True:
             try:
-                opcao_escolhida = self.view_traje.view_opcoes()
+                opcao_escolhida = self.view_traje.abrir()
                 funcao_escolhida = switcher[opcao_escolhida]
                 funcao_escolhida()
             except ObjetoDuplicadoException as e:
-                print(e)
+                self.view_traje.pop_mensagem("Erro", e)

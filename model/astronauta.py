@@ -1,7 +1,10 @@
 from model.traje import Traje
 
+
 class Astronauta:
-    def __init__(self,codigo: int, nome: str,nacionalidade: str, traje: Traje):
+    def __init__(self, codigo: int,
+                 nome: str, nacionalidade: str,
+                 traje: Traje):
         self.__codigo = codigo
         self.__nome = nome
         self.__nacionalidade = nacionalidade
@@ -10,7 +13,7 @@ class Astronauta:
     @property
     def codigo(self):
         return self.__codigo
-    
+
     @codigo.setter
     def codigo(self, codigo: int):
         self.__codigo = codigo
@@ -20,7 +23,7 @@ class Astronauta:
         return self.__nome
 
     @nome.setter
-    def nome(self,nome: str):
+    def nome(self, nome: str):
         self.__nome = nome
 
     @property
@@ -28,7 +31,7 @@ class Astronauta:
         return self.__nacionalidade
 
     @nacionalidade.setter
-    def nacionalidade(self,nacionalidade: str):
+    def nacionalidade(self, nacionalidade: str):
         self.nacionalidade = nacionalidade
 
     @property
@@ -36,5 +39,5 @@ class Astronauta:
         return self.__traje
 
     @traje.setter
-    def traje(self,traje: Traje):
+    def traje(self, traje: Traje):
         self.__traje = traje

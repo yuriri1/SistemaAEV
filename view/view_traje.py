@@ -1,40 +1,78 @@
 from view.abstract_view import AbstractView
+import PySimpleGUI as sg
 
 
 class ViewTraje(AbstractView):
-    def __init__(self):
-        pass
+    def __init__(self, controller_traje):
+        self.__controller_traje = controller_traje
+        self.__cabecalho = ["CODIGO", "TIPO", "CAP. O2", "DONO"]
+        self.__janela = None
+        self.iniciar_componentes()
 
-    def view_opcoes(self):
-        print("MENU INICIAL ---> MENU DO TRAJE")
-        print("1 - Inserir traje")
-        print("2 - Remover traje")
-        print("3 - Listar traje")
-        print("0 - Voltar")
-        opcao = self.le_num_inteiro("Escolha uma opção: ", [0, 1, 2, 3])
-        return opcao
+    @property
+    def controller_traje(self):
+        return self.__controller_traje
 
-    def view_incluir(self, tipos: enumerate):
-        print("MENU INICIAL ---> MENU DO TRAJE --> INCLUIR TRAJE")
-        codigo = self.le_num_inteiro("Codigo do traje: ")
-        for i in list(tipos):
-            print(str(i.value) + " - " + str(i.name))
-        opcao = self.le_num_inteiro("Escolha o tipo do traje: ", [1, 2])
-        for j in list(tipos):
-            if opcao == j.value:
-                tipo = j
-        capacidade_o2 = self.le_num_flutuante("Capacidade de oxigenio: ")
-        return codigo, tipo, capacidade_o2
+    @property
+    def cabecalho(self):
+        return self.__cabecalho
 
-    def view_listar(self, trajes: list):
-        print("-"*60)
-        print(f"{'CODIGO': <10}{'TIPO': ^15}\
-{'CAPACIDADE DE OXIGENIO(L)': ^20}{'DONO': >10}")
-        for traje in trajes:
-            if traje.dono is None:
-                print(f"{traje.codigo: <10}{traje.tipo.name: ^15}\
-{traje.capacidade_o2: ^25}{'Sem dono': >10}")
-            else:
-                print(f"{traje.codigo: <10}{traje.tipo.name: ^15}\
-{traje.capacidade_o2: ^25}{traje.dono.nome: >10}")
-        print("-"*60)
+    def iniciar_componentes(self):
+        sg.ChangeLookAndFeel("Light Brown 8")
+
+        trajes = self.dict_para_matriz(
+            self.controller_traje.lista_obj_para_dict())
+
+        layout = [
+            [sg.Text("Menu de Trajes",
+                     justification='center',
+                     font=("Gulim", 18))],
+            [sg.Button("INSERIR",
+                       key="inserir",
+                       expand_x=True,
+                       expand_y=True,
+                       font=("Gulim", 14, "bold"))],
+            [sg.Button("REMOVER",
+                       key="remover",
+                       expand_x=True,
+                       expand_y=True,
+                       font=("Gulim", 14, "bold"))],
+            [sg.Text("_"*80)],
+            [sg.Text("Lista de Trajes",
+                     font=("Gulim", 18))],
+            [sg.Table(values=trajes,
+                      headings=self.cabecalho,
+                      justification='center',
+                      auto_size_columns=True,
+                      expand_x=True,
+                      size=(0, 20),
+                      font=("Gulim", 14, "bold"))],
+            [sg.Button("↩",
+                       focus=True,
+                       key="voltar",
+                       expand_x=True,
+                       expand_y=True,
+                       font=("Gulim", 23, "bold"))]
+        ]
+
+        self.__janela = sg.Window("SCAEV - Trajes", layout, size=self.size())
+
+    def abrir(self):
+        self.iniciar_componentes()
+        evento, valores = self.__janela.Read()
+
+        switcher = {"inserir": 1,
+                    "remover": 2}
+
+        if evento in (None, "voltar"):
+            self.fechar()
+            return 0
+
+        self.fechar()
+        return switcher[evento]
+
+    def fechar(self):
+        self.__janela.Close()
+
+    def pop_mensagem(self, titulo: str, mensagem: str):
+        sg.Popup(titulo, mensagem)

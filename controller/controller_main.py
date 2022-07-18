@@ -4,8 +4,8 @@ from controller.controller_caixa import ControllerCaixa
 from controller.controller_ferramenta import ControllerFerramenta
 from controller.controller_tarefa import ControllerTarefa
 from controller.controller_traje import ControllerTraje
-from view.view_main import ViewMain
 from exception.lista_vazia_exception import ListaVaziaException
+from view.view_main import ViewMain
 
 
 class ControllerMain:
@@ -46,6 +46,10 @@ class ControllerMain:
     def controller_relatorio(self):
         return self.__controller_relatorio
 
+    @property
+    def view_main(self):
+        return self.__view_main
+
     def opcoes_aev(self):
         self.controller_aev.menu_opcoes()
 
@@ -67,7 +71,7 @@ class ControllerMain:
     def desligar(self):
         exit(0)
 
-    def menu_opcoes(self):
+    def iniciar_sistema(self):
         switcher = {0: self.desligar,
                     1: self.opcoes_aev,
                     2: self.opcoes_astronauta,
@@ -78,8 +82,8 @@ class ControllerMain:
 
         while True:
             try:
-                opcao = self.__view_main.menu_inicial()
-                funcao_selecionada = switcher[opcao]
-                funcao_selecionada()
+                opcao_escolhida = self.view_main.abrir()
+                funcao_escolhida = switcher[opcao_escolhida]
+                funcao_escolhida()
             except ListaVaziaException as e:
-                print(e)
+                self.view_main.pop_mensagem("Erro", e)

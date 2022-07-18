@@ -1,58 +1,73 @@
+import PySimpleGUI as sg
 from view.abstract_view import AbstractView
 
 
 class ViewAstronauta(AbstractView):
     def __init__(self):
+        self.__janela = None
+        self.iniciar_componentes()
+
+    def view_incluir(self):
         pass
 
-    def view_opcoes(self):
-        print("MENU INICIAL ---> MENU DO ASTRONAUTA")
-        print("1 - Inserir Astronauta")
-        print("2 - Remover Astronauta")
-        print("3 - Editar Astronauta")
-        print("4 - Listar Astronauta")
-        print("0 - Voltar")
-        opcao = self.le_num_inteiro("Escolha uma opção: ", [0, 1, 2, 3, 4])
-        return opcao
+    def iniciar_componentes(self):
+        sg.ChangeLookAndFeel("Light Brown 8")
+        cabecalho = ["CODIGO", "NOME", "NACIONALIDADE"]
 
-    def __view_trajes_disponiveis(self, trajes: list):
-        print("-"*50)
-        print(f"{'TRAJES DISPONIVEIS': ^40}")
-        print(f"{'CODIGO': <10}{'TIPO': ^20}{'CAPACIDADE 02': >15}")
-        for traje in trajes:
-            if traje.dono is None:
-                print(f"{traje.codigo: <10}{traje.tipo.name: ^20}\
-{traje.capacidade_o2: >15}")
-        print("-"*50)
+        layout = [
+            [sg.Text("Menu de Astronautas",
+                     expand_x=True,
+                     justification='center',
+                     font=("Gulim", 18))],
+            [sg.Button("INSERIR",
+                       key="inserir",
+                       expand_x=True,
+                       expand_y=True,
+                       font=("Gulim", 14, "bold"))],
+            [sg.Button("REMOVER",
+                       key="remover",
+                       expand_x=True,
+                       expand_y=True,
+                       font=("Gulim", 14, "bold"))],
+            [sg.Text("_"*80)],
+            [sg.Text("Lista de Astronautas",
+                     expand_x=True,
+                     justification='center',
+                     font=("Gulim", 18))],
+            [sg.Table(values=[[]],
+                      headings=cabecalho,
+                      justification='center',
+                      auto_size_columns=True,
+                      expand_x=True,
+                      size=(0, 20),
+                      font=("Gulim", 14, "bold"))],
+            [sg.Button("↩",
+                       focus=True,
+                       key="voltar",
+                       expand_x=True,
+                       expand_y=True,
+                       font=("Gulim", 23, "bold"))]
+        ]
 
-    def view_incluir(self, trajes: list, c_traje: object):
-        print("MENU INICIAL ---> MENU DO ASTRONAUTA\
---> INCLUIR ASTRONAUTA")
-        codigo = self.le_num_inteiro("Codigo do astronauta: ")
-        nome = str(input("Nome do astronauta: ")).title()
-        nacionalidade = str(input("Nacionalidade do astronauta: "))
-        self.__view_trajes_disponiveis(trajes)
-        codigos = []
-        for j in trajes:
-            codigos.append(j.codigo)
-        codigo_selecionado = (self.
-                              le_num_inteiro("Digite o codigo do traje: ",
-                                             codigos))
-        traje_escolhido = (c_traje.
-                           pega_traje_pelo_codigo(codigo_selecionado))
+        self.__janela = sg.Window("SCAEV - Astronautas",
+                                  layout, size=self.size())
 
-        return codigo, nome, nacionalidade, traje_escolhido
+    def abrir(self):
+        self.iniciar_componentes()
+        evento, valores = self.__janela.Read()
 
-    def view_listar(self, astronautas: list):
-        print("-"*70)
-        print(f"{'CODIGO': <10}{'NOME': ^15}{'NACIONALIDADE': ^15}\
-{'TRAJE': >15}")
-        for astronauta in astronautas:
-            print(f"{astronauta.codigo: <10}{astronauta.nome: ^15}\
-{astronauta.nacionalidade: ^15}{astronauta.traje.tipo.name: >15}")
-        print("-"*70)
+        switcher = {"inserir": 1,
+                    "remover": 2}
 
-    def view_editar(self):
-        nome = str(input("Escreva o nome: ")).title()
-        nacionalidade = str(input("Escreva a nacionalidade: ")).capitalize()
-        return nome, nacionalidade
+        if evento in (None, "voltar"):
+            self.fechar()
+            return 0
+
+        self.fechar()
+        return switcher[evento]
+
+    def fechar(self):
+        self.__janela.Close()
+
+    def pop_mensagem(self, titulo: str, mensagem: str):
+        sg.Popup(titulo, mensagem)
