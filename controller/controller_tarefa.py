@@ -8,7 +8,7 @@ from exception.lista_vazia_exception import ListaVaziaException
 class ControllerTarefa(AbstractController):
     def __init__(self, controller_main):
         self.__tarefas = []
-        self.__view_tarefa = ViewTarefa()
+        self.__view_tarefa = ViewTarefa(self)
         self.__controller_main = controller_main
 
     @property
@@ -71,6 +71,16 @@ class ControllerTarefa(AbstractController):
         else:
             self.view_tarefa.view_listar(self.tarefas)
             return True
+
+    def lista_obj_para_dict(self):
+        dict = {}
+        for tarefa in self.tarefas:
+            dict[tarefa.codigo] = f"{str(tarefa.titulo)};\
+                                    {str(tarefa.caixa.nome)};\
+                                    {str(tarefa.descricao)};\
+                                    {str(tarefa.duracao)}"
+
+        return dict
 
     def pega_tarefa_pelo_codigo(self, codigo: int):
         for tarefa in self.tarefas:

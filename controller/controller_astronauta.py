@@ -8,7 +8,7 @@ from exception.lista_vazia_exception import ListaVaziaException
 class ControllerAstronauta(AbstractController):
     def __init__(self, controller_main):
         self.__astronautas = []
-        self.__view_astronauta = ViewAstronauta()
+        self.__view_astronauta = ViewAstronauta(self)
         self.__controller_main = controller_main
 
     @property
@@ -82,6 +82,14 @@ class ControllerAstronauta(AbstractController):
         else:
             self.view_astronauta.view_listar(self.astronautas)
             return True
+
+    def lista_obj_para_dict(self):
+        dict = {}
+        for astronauta in self.astronautas:
+            dict[astronauta.codigo] = f"{str(astronauta.nome)};\
+                                        {str(astronauta.nacionalidade)};\
+                                        {str(astronauta.traje.tipo.name)}"
+        return dict
 
     def pega_astronauta_pelo_codigo(self, codigo: list):
         for astronauta in self.astronautas:

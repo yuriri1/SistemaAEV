@@ -5,7 +5,7 @@ import PySimpleGUI as sg
 class ViewTraje(AbstractView):
     def __init__(self, controller_traje):
         self.__controller_traje = controller_traje
-        self.__cabecalho = ["CODIGO", "TIPO", "CAP. O2", "DONO"]
+        self.__cabecalho = ["CODIGO", "TIPO", "CAP. O2 (L)", "DONO"]
         self.__janela = None
         self.iniciar_componentes()
 
@@ -16,6 +16,14 @@ class ViewTraje(AbstractView):
     @property
     def cabecalho(self):
         return self.__cabecalho
+
+    def dict_para_matriz(self, dicionario: dict):
+        matriz = []
+        for chave, valor in dicionario.items():
+            valor.split(";")
+            matriz.append([chave, valor[0], valor[1], valor[2]])
+
+        return matriz
 
     def iniciar_componentes(self):
         sg.ChangeLookAndFeel("Light Brown 8")

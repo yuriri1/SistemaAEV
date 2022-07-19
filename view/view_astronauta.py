@@ -3,16 +3,32 @@ from view.abstract_view import AbstractView
 
 
 class ViewAstronauta(AbstractView):
-    def __init__(self):
+    def __init__(self, controller_astronauta):
+        self.__controller_astronauta = controller_astronauta
+        self.__cabecalho = ["CODIGO", "NOME", "NACIONALIDADE", "TRAJE"]
         self.__janela = None
         self.iniciar_componentes()
 
-    def view_incluir(self):
-        pass
+    @property
+    def controller_astronauta(self):
+        return self.__controller_astronauta
+
+    @property
+    def cabecalho(self):
+        return self.__cabecalho
+
+    def dict_para_matriz(self, dicionario: dict):
+        matriz = []
+        for chave, valor in dicionario.items():
+            valor.split(";")
+            matriz.append([chave, valor[0], valor[1], valor[2]])
+        return matriz
 
     def iniciar_componentes(self):
         sg.ChangeLookAndFeel("Light Brown 8")
-        cabecalho = ["CODIGO", "NOME", "NACIONALIDADE"]
+
+        astronautas = self.dict_para_matriz(
+            self.controller_astronauta.lista_obj_para_dict())
 
         layout = [
             [sg.Text("Menu de Astronautas",
@@ -34,8 +50,8 @@ class ViewAstronauta(AbstractView):
                      expand_x=True,
                      justification='center',
                      font=("Gulim", 18))],
-            [sg.Table(values=[[]],
-                      headings=cabecalho,
+            [sg.Table(values=astronautas,
+                      headings=self.cabecalho,
                       justification='center',
                       auto_size_columns=True,
                       expand_x=True,

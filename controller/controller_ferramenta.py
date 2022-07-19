@@ -75,10 +75,9 @@ class ControllerFerramenta(AbstractController):
             return True
 
     def lista_obj_para_dict(self):
-        lista = [Ferramenta("teste1", 1), Ferramenta("teste2", 2)]
         dict = {}
-        for ferramenta in lista:
-            dict[ferramenta.codigo] = ferramenta.nome
+        for ferramenta in self.ferramentas:
+            dict[ferramenta.codigo] = str(ferramenta.nome)
 
         return dict
 

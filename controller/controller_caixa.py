@@ -8,7 +8,7 @@ from exception.lista_vazia_exception import ListaVaziaException
 class ControllerCaixa(AbstractController):
     def __init__(self, controller_main):
         self.__caixas = []
-        self.__view_caixa = ViewCaixa()
+        self.__view_caixa = ViewCaixa(self)
         self.__controller_main = controller_main
 
     @property
@@ -69,6 +69,18 @@ class ControllerCaixa(AbstractController):
         else:
             self.view_caixa.view_listar(self.caixas)
             return True
+
+    def lista_obj_para_dict(self):
+        dict = {}
+        for caixa in self.caixas:
+            lista_ferramentas = []
+            for ferramenta in caixa.ferramentas:
+                lista_ferramentas.append(ferramenta)
+            str_ferramenta = ", ".join(lista_ferramentas)
+
+            dict[caixa.codigo] = f"{str(caixa.nome)};{str_ferramenta}"
+
+        return dict
 
     def pega_caixa_pelo_codigo(self, codigo: list):
         for caixa in self.caixas:

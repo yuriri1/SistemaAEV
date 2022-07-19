@@ -3,16 +3,34 @@ import PySimpleGUI as sg
 
 
 class ViewTarefa(AbstractView):
-    def __init__(self):
+    def __init__(self, controller_tarefa):
+        self.__controller_tarefa = controller_tarefa
+        self.__cabecalho = ["CODIGO", "TITULO", "CAIXA",
+                            "DURAÇAO", "DESCRIÇAO"]
         self.__janela = None
         self.iniciar_componentes()
 
-    def view_incluir(self):
-        pass
+    @property
+    def controller_tarefa(self):
+        return self.__controller_tarefa
+
+    @property
+    def cabecalho(self):
+        return self.__cabecalho
+
+    def dict_para_matriz(self, dicionario: dict):
+        matriz = []
+        for chave, valor in dicionario.items():
+            valor.split(";")
+            matriz.append([chave, valor[0], valor[1], valor[2]])
+
+        return matriz
 
     def iniciar_componentes(self):
         sg.ChangeLookAndFeel("Light Brown 8")
-        cabecalho = ["CODIGO", "TITULO", "CAIXA", "DESCRIÇAO"]
+
+        tarefas = self.dict_para_matriz(
+            self.controller_tarefa.lista_obj_para_dict())
 
         layout = [
             [sg.Text("Menu de Ferramentas",
@@ -34,8 +52,8 @@ class ViewTarefa(AbstractView):
                      expand_x=True,
                      justification='center',
                      font=("Gulim", 18))],
-            [sg.Table(values=[[]],
-                      headings=cabecalho,
+            [sg.Table(values=tarefas,
+                      headings=self.cabecalho,
                       justification='center',
                       auto_size_columns=True,
                       expand_x=True,

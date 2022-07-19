@@ -12,8 +12,8 @@ class AbstractView(ABC):
 
     def dict_para_matriz(self, dicionario: dict):
         matriz = []
-        for key, value in dicionario.items():
-            matriz.append([key, value])
+        for chave, valor in dicionario.items():
+            matriz.append([chave, valor])
         return matriz
     # def le_num_inteiro(self, mensagem: str, inteiros_validos: list = None):
     #     while True:

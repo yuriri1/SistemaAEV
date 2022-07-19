@@ -3,16 +3,32 @@ import PySimpleGUI as sg
 
 
 class ViewCaixa(AbstractView):
-    def __init__(self):
+    def __init__(self, controller_caixa):
+        self.__controller_caixa = controller_caixa
+        self._cabecalho = ["CODIGO", "NOME", "FERRAMENTAS"]
         self.__janela = None
         self.iniciar_componentes()
 
-    def view_incluir(self):
-        pass
+    @property
+    def controller_caixa(self):
+        return self.__controller_caixa
+
+    @property
+    def cabecalho(self):
+        return self._cabecalho
+
+    def dict_para_matriz(self, dicionario: dict):
+        matriz = []
+        for chave, valor in dicionario.items():
+            valor.split(";")
+            matriz.append([chave, valor[0], valor[1]])
+        return matriz
 
     def iniciar_componentes(self):
         sg.ChangeLookAndFeel("Light Brown 8")
-        cabecalho = ["ID", "Nome", "Ferramentas"]
+
+        caixas = self.dict_para_matriz(
+            self.controller_caixa.lista_obj_para_dict())
 
         layout = [
             [sg.Text("Menu de Caixa de Ferramentas",
@@ -34,8 +50,8 @@ class ViewCaixa(AbstractView):
                      expand_x=True,
                      justification='center',
                      font=("Gulim", 18))],
-            [sg.Table(values=[[]],
-                      headings=cabecalho,
+            [sg.Table(values=caixas,
+                      headings=self.cabecalho,
                       justification='center',
                       auto_size_columns=True,
                       expand_x=True,

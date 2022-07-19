@@ -71,13 +71,14 @@ class ControllerTraje(AbstractController):
             return True
 
     def lista_obj_para_dict(self):
-        lista = [Traje(1, TipoTraje.Extraveicular, 100),
-                 Traje(2, TipoTraje.Intraveicular, 200)]
         dict = {}
-        for traje in lista:
-            dict[traje.codigo] = [traje.tipo,
-                                  traje.capacidade_o2,
-                                  traje.dono]
+        for traje in self.trajes:
+            if traje.dono is None:
+                dict[traje.codigo] = f"{str(traje.tipo.name)};\
+                        {str(traje.capacidade_o2)};'Sem dono'"
+            else:
+                dict[traje.codigo] = f"{str(traje.tipo.name)};\
+                        {str(traje.capacidade_o2)};{str(traje.dono.nome)}"
 
         return dict
 
