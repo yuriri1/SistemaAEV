@@ -3,7 +3,7 @@ from model.ferramenta import Ferramenta
 
 
 class FerramentaDAO(DAO):
-    __instance = None    
+    __instance = None
 
     def __init__(self):
         super().__init__("ferramentas.pkl")
@@ -14,10 +14,11 @@ class FerramentaDAO(DAO):
         return FerramentaDAO.__instance
 
     def adiciona(self, ferramenta: Ferramenta):
-        if ferramenta.codigo in self.__cache.keys():
+        if self.pega(ferramenta.codigo) is not None:
             return None
         else:
-            super().add(ferramenta.codigo, ferramenta)
+            super().adiciona(ferramenta.codigo, ferramenta)
+            return True
 
     def pega(self, codigo: int):
         return super().pega(codigo)

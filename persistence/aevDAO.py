@@ -14,10 +14,11 @@ class AEVDAO(DAO):
         return AEVDAO.__instance
 
     def adiciona(self, aev: AEV):
-        if aev.codigo in self.__cache.keys():
+        if self.pega(aev.codigo) is not None:
             return None
         else:
-            super().add(aev.codigo, aev)
+            super().adiciona(aev.codigo, aev)
+            return True
 
     def pega(self, codigo: int):
         return super().pega(codigo)

@@ -25,7 +25,7 @@ class Relatorio():
     def gerar_relatorio(self):
 
         ferramentas = (self.aev.tarefa.caixa.ferramentas.copy())
-        # eixo_y = 0
+        print(tarefas)
         nome_ferramentas = []
         for ferramenta in ferramentas:
             nome_ferramentas.append(ferramenta.nome)
@@ -35,9 +35,9 @@ class Relatorio():
         cnv = canvas.Canvas(f"relatorio{self.aev.codigo}.pdf")
         cnv.setFont("Helvetica", 18)
         cnv.drawImage("relatorios/nasa1.png", 0,
-                        self.mm2p(235), width=200, height=150)
+                      self.mm2p(235), width=200, height=150)
         cnv.drawString(self.mm2p(70), self.mm2p(270),
-                        "National Aeronautics and Space Administration")
+                       "National Aeronautics and Space Administration")
         cnv.drawString(self.mm2p(70), self.mm2p(255),
                         "Houston - Texas - USA")
         cnv.drawString(self.mm2p(70), self.mm2p(240),

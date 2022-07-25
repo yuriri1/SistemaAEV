@@ -1,4 +1,4 @@
 class RequisitoExcepiton(Exception):
-    def __init__(self, requisito: str):
-        super().__init__(f'''Esse astronauta não atende ao
-requisito de {requisito}''')
+    def __init__(self, nome: str, requisito: str):
+        super().__init__(f"O astronauta {nome}, " +
+                         f"não atende ao requisito {requisito}")

@@ -3,7 +3,7 @@ from model.traje import Traje
 
 
 class TrajeDAO(DAO):
-    __instance = None    
+    __instance = None
 
     def __init__(self):
         super().__init__("trajes.pkl")
@@ -14,10 +14,14 @@ class TrajeDAO(DAO):
         return TrajeDAO.__instance
 
     def adiciona(self, traje: Traje):
-        if traje.codigo in self.__cache.keys():
+        if self.pega(traje.codigo) is not None:
             return None
         else:
-            super().add(traje.codigo, traje)
+            super().adiciona(traje.codigo, traje)
+            return True
+
+    def altera(self, traje: Traje):
+        super().adiciona(traje.codigo, traje)
 
     def pega(self, codigo: int):
         return super().pega(codigo)

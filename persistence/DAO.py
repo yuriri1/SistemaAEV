@@ -7,7 +7,10 @@ class DAO(ABC):
     def __init__(self, arquivo=" "):
         self.__arquivo = arquivo
         self.__cache = {}
-        self.__load()
+        try:
+            self.__load()
+        except FileNotFoundError:
+            self.__dump()
 
     def __load(self):
         self.__cache = pickle.load(open(self.__arquivo, 'rb'))

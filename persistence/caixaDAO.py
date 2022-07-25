@@ -14,10 +14,11 @@ class CaixaDAO(DAO):
         return CaixaDAO.__instance
 
     def adiciona(self, caixa: CaixaFerramenta):
-        if caixa.codigo in self.__cache.keys():
+        if self.pega(caixa.codigo) is not None:
             return None
         else:
-            super().add(caixa.codigo, caixa)
+            super().adiciona(caixa.codigo, caixa)
+            return True
 
     def pega(self, codigo: int):
         return super().pega(codigo)

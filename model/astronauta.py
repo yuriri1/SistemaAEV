@@ -32,7 +32,7 @@ class Astronauta:
 
     @nacionalidade.setter
     def nacionalidade(self, nacionalidade: str):
-        self.nacionalidade = nacionalidade
+        self.__nacionalidade = nacionalidade
 
     @property
     def traje(self):

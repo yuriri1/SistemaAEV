@@ -15,6 +15,13 @@ class AbstractView(ABC):
         for chave, valor in dicionario.items():
             matriz.append([chave, valor])
         return matriz
+
+    def view_incluir(self):
+        pass
+
+    def view_editar(self):
+        pass
+
     # def le_num_inteiro(self, mensagem: str, inteiros_validos: list = None):
     #     while True:
     #         valor_lido = input(mensagem)
@@ -67,12 +74,3 @@ class AbstractView(ABC):
     #     return self.le_num_inteiro(
     #             f"Escreva o codigo do {objeto} que deseja {acao}:",
     #             codigos)
-
-    def view_listar(self):
-        pass
-
-    def view_incluir(self):
-        pass
-
-    def view_editar(self):
-        pass

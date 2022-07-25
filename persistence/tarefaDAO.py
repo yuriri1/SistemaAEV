@@ -14,10 +14,11 @@ class TarefaDAO(DAO):
         return TarefaDAO.__instance
 
     def adiciona(self, tarefa: Tarefa):
-        if tarefa.codigo in self.__cache.keys():
+        if self.pega(tarefa.codigo) is not None:
             return None
         else:
-            super().add(tarefa.codigo, tarefa)
+            super().adiciona(tarefa.codigo, tarefa)
+            return True
 
     def pega(self, codigo: int):
         return super().pega(codigo)

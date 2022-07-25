@@ -14,10 +14,11 @@ class AstronautaDAO(DAO):
         return AstronautaDAO.__instance
 
     def adiciona(self, astronauta: Astronauta):
-        if astronauta.codigo in self.__cache.keys():
+        if self.pega(astronauta.codigo) is not None:
             return None
         else:
-            super().add(astronauta.codigo, astronauta)
+            super().adiciona(astronauta.codigo, astronauta)
+            return True
 
     def pega(self, codigo: int):
         return super().pega(codigo)
